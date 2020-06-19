@@ -9,6 +9,8 @@ import {
   ON_INPUT_EXPIRY_DATE,
   ON_INPUT_CARD_TYPE,
   ADD_NEW_CARD_DATA,
+  IS_EDIT_BTN_CLICK,
+  UPDATE_EDIT_CARD_DATA,
 } from '../constants/ActionType';
 import data from '../data/data.json';
 import {
@@ -16,17 +18,22 @@ import {
   updateListAfterRotationById,
   updateListAfterDeleteById,
   addNewCardToList,
+  updateEditListById,
+  cardTypeList,
 } from '../utils/CommonUtils';
 
 const INITIAL_STATE = {
   list: [],
   isLoading: true,
   isModalVisible: false,
+  cardTypeList: cardTypeList,
   name: '',
   logoType: '',
   cvv: '',
   expiryDate: '',
   cardNo: '',
+  modalFor: 'add',
+  editId: null,
 };
 
 export default function Home(state = INITIAL_STATE, action) {
@@ -52,6 +59,13 @@ export default function Home(state = INITIAL_STATE, action) {
       return {
         ...state,
         isModalVisible: action.payload,
+        modalFor: 'add',
+        name: '',
+        logoType: '',
+        cvv: '',
+        expiryDate: '',
+        cardNo: '',
+        editId: null,
       };
     case ON_INPUT_CARD_NAME:
       return {
@@ -83,6 +97,31 @@ export default function Home(state = INITIAL_STATE, action) {
         ...state,
         list: addNewCardToList(state.list, action.payload),
         isModalVisible: false,
+      };
+    case IS_EDIT_BTN_CLICK:
+      return {
+        ...state,
+        isModalVisible: true,
+        modalFor: 'edit',
+        name: action.payload.dataFor.u_name,
+        cvv: action.payload.dataFor.cvv.toString(),
+        logoType: action.payload.dataFor.logo.toString(),
+        cardNo: action.payload.dataFor.c_number.toString(),
+        expiryDate: action.payload.dataFor.expiry_date,
+        editId: action.payload.index,
+      };
+    case UPDATE_EDIT_CARD_DATA:
+      return {
+        ...state,
+        list: updateEditListById(state.list, action.payload),
+        isModalVisible: false,
+        editId: null,
+        modalFor: 'add',
+        name: '',
+        logoType: '',
+        cvv: '',
+        expiryDate: '',
+        cardNo: '',
       };
     default:
       return state;

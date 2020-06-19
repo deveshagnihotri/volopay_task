@@ -11,3 +11,6 @@ export const ON_INPUT_EXPIRY_DATE = 'on_input_expiry_date';
 export const ON_INPUT_CARD_TYPE = 'on_input_card_type';
 
 export const ADD_NEW_CARD_DATA = 'add_new_card_data';
+
+export const IS_EDIT_BTN_CLICK = 'is_edit_btn_click';
+export const UPDATE_EDIT_CARD_DATA = 'update_edit_card_data';

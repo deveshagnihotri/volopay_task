@@ -15,11 +15,13 @@ import {
   handleModalVisible,
   handleFormInput,
   addNewCard,
+  handleEditModal,
+  handleEditCard,
 } from '../../actions/HomeActions';
 import Colors from '../../constants/Colors';
 import ImgData from '../../constants/Images';
 import ModalComponent from '../Modal';
-import {checkFormValidation} from '../../utils/CommonUtils';
+import {checkFormValidation, updateCardNoText} from '../../utils/CommonUtils';
 import {ErrorToast} from '../../constants/Static';
 
 class HomeScreen extends Component {
@@ -47,13 +49,14 @@ class HomeScreen extends Component {
     this.props.handleFormInput(from, e);
   };
 
-  renderHeader = (card) => {
+  renderHeader = (card, index) => {
     return (
       <View style={styles.iconBox}>
         <TouchableOpacity onPress={() => this.handleFlipCard(card.id)}>
           <Image source={ImgData.rotateIcon} style={styles.img} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.handleEditModal(true, card, index)}>
           <Image source={ImgData.editIcon} style={styles.img} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.handleDeleteCard(card.id)}>
@@ -72,7 +75,7 @@ class HomeScreen extends Component {
         </View>
         {this.renderLineSeperator()}
         <View style={styles.cardNum}>
-          <Text style={styles.numText}>{card.c_number}</Text>
+          <Text style={styles.numText}>{updateCardNoText(card.c_number)}</Text>
         </View>
         {this.renderLineSeperator()}
         <View style={styles.footer}>
@@ -103,9 +106,13 @@ class HomeScreen extends Component {
           <Text style={styles.numText}>{card.cvv}</Text>
         </View>
         {this.renderLineSeperator()}
+        <View style={styles.expiryDate}>
+          <Text>expiry date(MM/YYYY) {card.expiry_date}</Text>
+        </View>
+        {this.renderLineSeperator()}
         <View style={styles.footer}>
           <Text>Not valid for payment in foreign</Text>
-          <Text>Verified by VISA</Text>
+          <Text>Verified by {card.logo}</Text>
         </View>
       </>
     );
@@ -114,8 +121,18 @@ class HomeScreen extends Component {
   handleAddNewCard = () => {
     let {name, logoType, cvv, expiryDate, cardNo} = this.props;
     let result = checkFormValidation(name, logoType, cardNo, expiryDate, cvv);
-    if (result.status) {
+    if (result.status && this.props.modalFor === 'add') {
       this.props.addNewCard(name, logoType, cvv, expiryDate, cardNo);
+    } else if (result.status && this.props.modalFor !== 'add') {
+      let data = {
+        name,
+        logoType,
+        cvv,
+        expiryDate,
+        cardNo,
+        id: this.props.editId,
+      };
+      this.props.handleEditCard(data);
     } else {
       ErrorToast(result.msg);
     }
@@ -127,13 +144,13 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.props.list &&
-            this.props.list.map((card) => (
+            this.props.list.map((card, index) => (
               <View style={styles.card}>
-                {this.renderHeader(card)}
+                {this.renderHeader(card, index)}
                 {this.renderLineSeperator()}
                 {!card.isRotated
-                  ? this.renderFrontView(card)
-                  : this.renderBackView(card)}
+                  ? this.renderFrontView(card, index)
+                  : this.renderBackView(card, index)}
               </View>
             ))}
         </ScrollView>
@@ -154,6 +171,8 @@ class HomeScreen extends Component {
           logoType={this.props.logoType}
           handleInputValue={(from, e) => this.onChangeTextInput(from, e)}
           handleAddBtn={() => this.handleAddNewCard()}
+          modalFor={this.props.modalFor}
+          cardTypeList={this.props.cardTypeList}
         />
       </View>
     );
@@ -197,18 +216,19 @@ const styles = StyleSheet.create({
     padding: 22,
   },
   numText: {
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: '800',
   },
   icon: {height: 50, width: 80},
   footer: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 8,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   img: {
-    height: 25,
-    width: 25,
+    height: 20,
+    width: 20,
     marginRight: 5,
   },
   addContainer: {
@@ -239,6 +259,10 @@ const styles = StyleSheet.create({
     padding: 5,
     color: Colors.textColor,
   },
+  expiryDate: {
+    padding: 5,
+    fontSize: 18,
+  },
 });
 
 const mapStateToprops = ({Home}) => {
@@ -251,6 +275,9 @@ const mapStateToprops = ({Home}) => {
     cvv,
     expiryDate,
     cardNo,
+    modalFor,
+    editId,
+    cardTypeList,
   } = Home;
   return {
     list,
@@ -261,6 +288,9 @@ const mapStateToprops = ({Home}) => {
     cvv,
     expiryDate,
     cardNo,
+    modalFor,
+    editId,
+    cardTypeList,
   };
 };
 
@@ -271,4 +301,6 @@ export default connect(mapStateToprops, {
   handleModalVisible,
   handleFormInput,
   addNewCard,
+  handleEditModal,
+  handleEditCard,
 })(HomeScreen);

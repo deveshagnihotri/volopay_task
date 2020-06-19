@@ -5,7 +5,7 @@
     "c_number": 1234567887654321,
     "expiry_date": "09/2021",
     "cvv": 233,
-    "logo": ""
+    "logo": "Visa"
   },
   {
     "id": 1,
@@ -13,7 +13,7 @@
     "c_number": 1234567887654321,
     "expiry_date": "09/2023",
     "cvv": 776,
-    "logo": ""
+    "logo": "MasterCard"
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "c_number": 1234567887654321,
     "expiry_date": "09/2023",
     "cvv": 776,
-    "logo": ""
+    "logo": "MasterCard"
   },
   {
     "id": 3,
@@ -29,6 +29,6 @@
     "c_number": 1234567887654321,
     "expiry_date": "09/2023",
     "cvv": 776,
-    "logo": ""
+    "logo": "MasterCard"
   }
 ]

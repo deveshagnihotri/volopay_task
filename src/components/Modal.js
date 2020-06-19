@@ -26,6 +26,10 @@ export default function ModalComponent(props) {
     setCardType([...result]);
   };
 
+  const handleSubmitBtn = () => {
+    props.handleAddBtn();
+  };
+
   return (
     <Modal
       isVisible={props.isVisible}
@@ -34,7 +38,9 @@ export default function ModalComponent(props) {
       onDismiss={() => props.onDismiss(false)}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.titleText}>Add a new Card</Text>
+          <Text style={styles.titleText}>
+            {props.modalFor === 'add' ? 'Add a new Card' : 'Edit card'}
+          </Text>
         </View>
         {renderLineSeperator()}
         <Text style={styles.labelText}>Name</Text>
@@ -91,10 +97,8 @@ export default function ModalComponent(props) {
           maxLength={3}
         />
 
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => props.handleAddBtn()}>
-          <Text>Add card</Text>
+        <TouchableOpacity style={styles.btn} onPress={() => handleSubmitBtn()}>
+          <Text> Submit</Text>
         </TouchableOpacity>
       </View>
     </Modal>

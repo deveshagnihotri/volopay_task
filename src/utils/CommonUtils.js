@@ -48,13 +48,15 @@ export const checkFormValidation = (
   cvv,
 ) => {
   if (name === '') {
-    return {status: false, msg: 'enter a name'};
+    return {status: false, msg: 'please, enter a name'};
   } else if (cardNo === '' || cardNo.toString().length < 16) {
-    return {status: false, msg: 'enter a valid card no of 16 digit'};
+    return {status: false, msg: 'please, enter a valid card no of 16 digit'};
   } else if (cvv === '' || cvv.toString().length < 3) {
-    return {status: false, msg: 'enter a valid cvv of 3 digit'};
+    return {status: false, msg: 'please,enter a valid cvv of 3 digit'};
+  } else if (logoType === '') {
+    return {status: false, msg: 'please, select a card type'};
   } else if (expiryDate === '') {
-    return {status: false, msg: 'enter a expiry date'};
+    return {status: false, msg: 'please, enter a expiry date'};
   } else {
     return {status: true};
   }
@@ -73,5 +75,35 @@ export const handleCardTypeSelection = (prevList, selectedName) => {
       card.isSelected = false;
     }
   });
+  return [...prevList];
+};
+
+export const updateCardNoText = (a) => {
+  a = a
+    .toString()
+    .split('')
+    .reverse()
+    .join('')
+    .replace(/([0-9]{4})/g, '$1 ')
+    .split('')
+    .reverse()
+    .join('');
+  return a;
+};
+
+export const updateEditListById = (prevList, data) => {
+  let result = prevList;
+  result.map((card, index) => {
+    if (index === data.id) {
+      card.c_number = data.cardNo;
+      card.cvv = data.cvv;
+      card.expiryDate = data.expiryDate;
+      card.logo = data.logoType;
+      card.c_name = data.name;
+      card.isRotated = false;
+      card.id = data.id;
+    }
+  });
+  SuccessToast('card updated successfuly');
   return [...prevList];
 };

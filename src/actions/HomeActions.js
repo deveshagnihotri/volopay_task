@@ -9,6 +9,8 @@ import {
   ON_INPUT_EXPIRY_DATE,
   ON_INPUT_CARD_TYPE,
   ADD_NEW_CARD_DATA,
+  IS_EDIT_BTN_CLICK,
+  UPDATE_EDIT_CARD_DATA,
 } from '../constants/ActionType';
 
 export const homeAction = (name) => {
@@ -65,5 +67,20 @@ export const addNewCard = (name, logoType, cvv, expiryDate, cardNo) => {
   let data = {name, logoType, cvv, expiryDate, cardNo};
   return (dispatch) => {
     dispatch({type: ADD_NEW_CARD_DATA, payload: data});
+  };
+};
+
+export const handleEditModal = (val, dataFor, index) => {
+  let data = {val, dataFor, index};
+  console.log(data, 'handleEditModal');
+  return (dispatch) => {
+    dispatch({type: IS_EDIT_BTN_CLICK, payload: data});
+  };
+};
+
+export const handleEditCard = (data) => {
+  console.log(data, 'handleEditCard');
+  return (dispatch) => {
+    dispatch({type: UPDATE_EDIT_CARD_DATA, payload: data});
   };
 };

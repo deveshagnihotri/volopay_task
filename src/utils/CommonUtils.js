@@ -1,5 +1,4 @@
 import {ErrorToast, SuccessToast} from '../constants/Static';
-import Images from '../constants/Images';
 
 export const UpdateListData = (prevList) => {
   let newList = prevList.map((list) => ({

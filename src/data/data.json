@@ -1,0 +1,34 @@
+[
+  {
+    "id": 0,
+    "u_name": "Devesh Agnihotri",
+    "c_number": 1234567887654321,
+    "expiry_date": "09/2021",
+    "cvv": 233,
+    "logo": ""
+  },
+  {
+    "id": 1,
+    "u_name": "Suvesh Agnihotri",
+    "c_number": 1234567887654321,
+    "expiry_date": "09/2023",
+    "cvv": 776,
+    "logo": ""
+  },
+  {
+    "id": 2,
+    "u_name": "Suvesh Agnihotri",
+    "c_number": 1234567887654321,
+    "expiry_date": "09/2023",
+    "cvv": 776,
+    "logo": ""
+  },
+  {
+    "id": 3,
+    "u_name": "Devesh Agnihotri",
+    "c_number": 1234567887654321,
+    "expiry_date": "09/2023",
+    "cvv": 776,
+    "logo": ""
+  }
+]

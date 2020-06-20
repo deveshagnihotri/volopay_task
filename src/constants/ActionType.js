@@ -14,3 +14,5 @@ export const ADD_NEW_CARD_DATA = 'add_new_card_data';
 
 export const IS_EDIT_BTN_CLICK = 'is_edit_btn_click';
 export const UPDATE_EDIT_CARD_DATA = 'update_edit_card_data';
+export const HANDLE_CARD_TYPE_CHECKBOX = 'handle_card_type_checkbox';
+export const HANDLE_MODEL_CLOSE_BTN = 'handle_modal_close_btn';

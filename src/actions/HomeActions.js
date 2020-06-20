@@ -11,7 +11,9 @@ import {
   ADD_NEW_CARD_DATA,
   IS_EDIT_BTN_CLICK,
   UPDATE_EDIT_CARD_DATA,
+  HANDLE_CARD_TYPE_CHECKBOX,
 } from '../constants/ActionType';
+import {handleCardTypeSelection} from '../utils/CommonUtils';
 
 export const homeAction = (name) => {
   return (dispatch) => {
@@ -82,5 +84,12 @@ export const handleEditCard = (data) => {
   console.log(data, 'handleEditCard');
   return (dispatch) => {
     dispatch({type: UPDATE_EDIT_CARD_DATA, payload: data});
+  };
+};
+
+export const handleCardTypeCheckbox = (prevList, name) => {
+  return (dispatch) => {
+    let result = handleCardTypeSelection(prevList, name);
+    dispatch({type: HANDLE_CARD_TYPE_CHECKBOX, payload: result});
   };
 };

@@ -16,6 +16,7 @@ import {
   handleFormInput,
   addNewCard,
   handleEditModal,
+  handleCardTypeCheckbox,
   handleEditCard,
 } from '../../actions/HomeActions';
 import Colors from '../../constants/Colors';
@@ -139,7 +140,6 @@ class HomeScreen extends Component {
   };
 
   render() {
-    console.log(this.props.list, 'HomeScreen');
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -173,6 +173,9 @@ class HomeScreen extends Component {
           handleAddBtn={() => this.handleAddNewCard()}
           modalFor={this.props.modalFor}
           cardTypeList={this.props.cardTypeList}
+          handleCardTypeCheckbox={(name) =>
+            this.props.handleCardTypeCheckbox(this.props.cardTypeList, name)
+          }
         />
       </View>
     );
@@ -182,12 +185,13 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f5f5',
+    // backgroundColor: '#f7f5f5',
+    backgroundColor: Colors.bgColor,
   },
   card: {
     margin: 8,
     backgroundColor: Colors.white,
-    marginTop: 5,
+    marginTop: 10,
     shadowOffset: {width: 3, height: 5},
     shadowColor: Colors.dividerColor,
     elevation: 3,
@@ -303,4 +307,5 @@ export default connect(mapStateToprops, {
   addNewCard,
   handleEditModal,
   handleEditCard,
+  handleCardTypeCheckbox,
 })(HomeScreen);

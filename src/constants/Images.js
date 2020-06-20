@@ -7,4 +7,5 @@ export default ImgData = {
   rotateIcon: require('../assets/images/rotateIcon.png'),
   checkedIcon: require('../assets/images/checkedRadio.png'),
   uncheckedIcon: require('../assets/images/uncheckedIcon.png'),
+  closeIcon: require('../assets/images/closeIcon.png'),
 };

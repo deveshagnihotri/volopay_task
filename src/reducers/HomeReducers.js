@@ -11,6 +11,7 @@ import {
   ADD_NEW_CARD_DATA,
   IS_EDIT_BTN_CLICK,
   UPDATE_EDIT_CARD_DATA,
+  HANDLE_CARD_TYPE_CHECKBOX,
 } from '../constants/ActionType';
 import data from '../data/data.json';
 import {
@@ -97,6 +98,7 @@ export default function Home(state = INITIAL_STATE, action) {
         ...state,
         list: addNewCardToList(state.list, action.payload),
         isModalVisible: false,
+        cardTypeList: cardTypeList,
       };
     case IS_EDIT_BTN_CLICK:
       return {
@@ -122,6 +124,12 @@ export default function Home(state = INITIAL_STATE, action) {
         cvv: '',
         expiryDate: '',
         cardNo: '',
+        cardTypeList: cardTypeList,
+      };
+    case HANDLE_CARD_TYPE_CHECKBOX:
+      return {
+        ...state,
+        cardTypeList: action.payload,
       };
     default:
       return state;
